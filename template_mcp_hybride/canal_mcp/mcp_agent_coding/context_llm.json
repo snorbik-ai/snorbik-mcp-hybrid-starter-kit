@@ -1,0 +1,18 @@
+{
+  "tool_metadata": {
+    "name": "template-mcp-hybride",
+    "version": "1.0.0",
+    "architecture": "Tri-Canal Clean Architecture DPN v4",
+    "description": "Gabarit universel Starter Kit pour créer n'importe quel nouvel outil MCP en moins de 10 minutes."
+  },
+  "capabilities": [
+    "ping",
+    "status",
+    "custom_action"
+  ],
+  "agent_briefing": {
+    "mission": "Fournir des actions métiers déterministes, certifiées et résilientes aux agents IA.",
+    "rule_do": "Toujours passer par execute_action avec des paramètres validés par Pydantic.",
+    "rule_dont": "Ne jamais manipuler l'infrastructure en dehors des adaptateurs dédiés."
+  }
+}
