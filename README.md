@@ -4,7 +4,7 @@
 [![Protocol](https://img.shields.io/badge/MCP_Protocol-2025--11--25-blue.svg)](#)
 [![Architecture](https://img.shields.io/badge/Architecture-Hybride_Tri--Canal-teal.svg)](#)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](#)
-[![Tests](https://img.shields.io/badge/Tests-3%20passed-brightgreen.svg)](#)
+[![Tests](https://img.shields.io/badge/Tests-3%2F3%20passed-brightgreen.svg)](#)
 [![Status](https://img.shields.io/badge/Status-Active_Template-blue.svg)](#)
 
 > **Starter Kit Architecture MCP Hybride Tri-Canal**  
@@ -135,7 +135,7 @@ Ce serveur expose deux outils déterministes validés selon le schéma Pydantic 
 
 Mesuré sur banc d'essai local (environnement Windows 11 / Python 3.12) :
 - **Installation des dépendances (`python install.py`)** : ~**2 à 3 secondes** (avec cache pip local).
-- **Suite de tests unitaires (`pytest`)** : **3 tests passés à 100%** en **1,53 s**.
+- **Suite de tests unitaires (`pytest`)** : **3/3 tests passés à 100%** en **1,53 s**.
 - **Latence à froid (1er appel)** : **~390 à 400 ms** (initialisation du runtime Python, chargement des modules Pydantic et handshake `initialize`).
 - **Latence à chaud Canal STDIO (IPC)** : **0,19 ms** (moyenne sur 50 requêtes JSON-RPC consécutives sur stdin/stdout du même processus actif).
 - **Latence à chaud Canal SDK (In-Process)** : **0,008 ms** (moyenne sur 1000 exécutions directes en mémoire sans IPC).
