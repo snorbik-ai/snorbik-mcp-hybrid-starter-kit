@@ -85,20 +85,19 @@ def handle_tool_call(tool_name: str, arguments: dict):
     raise ValueError(f"Outil inconnu : {tool_name}")
 ```
 
-### Étape 5 : Enregistrer dans `install_mcp.py` & Déployer
-1. Ajoutez votre outil dans le dictionnaire `REGISTRY` de [`outils_internes/install_mcp.py`](file:///c:/Users/ntpar/Dev_IT/Projet_depo/Projet_IA/ia-pilote-e_commerce_saas/01_e-commerce%20mat%C3%A9riel%20construction%20mvp/batihome-ecommerce-garde-corps/outils_internes/install_mcp.py) :
+### Étape 5 : Enregistrer dans `install.py` & Déployer
+1. Ajoutez votre outil dans votre registre ou script d'installation :
 ```python
-    "10-mon-nouvel-outil": {
-        "num": "10",
-        "name": "10-mon-nouvel-outil",
+    "mon-nouvel-outil": {
+        "name": "mon-nouvel-outil",
         "command": "python",
-        "script": BASE_DIR / "10_mon_nouvel_outil" / "canal_mcp" / "mcp_server.py",
-        "description": "Outil #10 : Description claire de la responsabilité."
+        "script": "mon_nouvel_outil/canal_mcp/mcp_server.py",
+        "description": "Description claire de la responsabilité de l'outil."
     }
 ```
 2. Lancez l'installation automatique :
 ```bash
-python outils_internes/install_mcp.py --target antigravity
+python install.py
 ```
 3. Votre outil est instantanément disponible pour toutes les IAs (Antigravity, Cursor, Claude).
 
