@@ -22,8 +22,8 @@ Le **Pattern MCP Hybride Snorbik** repose sur le découplage strict entre la log
 Copier le dossier `template_mcp_hybride/` vers votre nouveau répertoire cible dans `outils_internes/` :
 
 ```bash
-# Exemple pour créer l'outil #10
-cp -r articles/01_PATTERN_MCP_HYBRIDE/03_GABARIT_STARTER_KIT/template_mcp_hybride outils_internes/10_mon_nouvel_outil
+# Exemple pour créer un nouvel outil :
+cp -r template_mcp_hybride mon_nouvel_outil
 ```
 
 ### Étape 2 : Définir les Entités & Contrats dans `core/domain/`
@@ -103,10 +103,12 @@ python install.py
 
 ---
 
-## 3. Checklist de Validation Qualité (Preuve L4)
+## 3. Checklist de Validation & Sas de Pré-Vol V26 (Obligatoire)
 
-Avant de livrer un nouvel outil MCP, validez systématiquement :
-- **Test SDK in-process :** Exécutez le cas d'usage sans lancer de sous-processus.
-- **Test Stdio JSON-RPC :** Envoyez une requête JSON `tools/list` et `tools/call` pour vérifier la réponse sous 100 ms.
-- **Résilience aux Erreurs :** Vérifiez qu'une erreur interne renvoie un payload structuré `{ "status": "FAILED", "error_message": "..." }` au lieu de faire crasher le serveur stdio.
-- **Encodage Windows UTF-8 :** Vérifiez la présence de `PYTHONIOENCODING: utf-8` dans `.mcp.json`.
+Avant de publier ou livrer un nouvel outil MCP, validez systématiquement les 6 sas de la Directive Transverse V26 :
+1. **Tests unitaires & Intégration :** Suite `pytest` à 100% au vert.
+2. **Cycle de vie MCP officiel (JSON-RPC 2.0) :** Réponse au handshake `initialize`, silence sur `notifications/initialized`, réponse valide sur `tools/list` et `tools/call`.
+3. **Résilience de l'installateur :** Contrôle des returncodes système (`pip`/`npm`) et refus d'écrasement en cas de JSON corrompu (génération d'un `.corrupted.bak`).
+4. **Sanctuarisation Zéro-Leak :** Absence absolue de chemins machine (`C:\Users`), de secrets, de termes internes ou de projets privés.
+5. **Alignement Juridique & Métadonnées :** Fichier physique `LICENSE` (MIT) présent, `pyproject.toml` aligné, et badges shields.io testés par requête HTTP 200.
+6. **Contrôle de la Source Réelle :** Vérification du commit de tête sur `origin/main` et inspection du rendu HTML public.
