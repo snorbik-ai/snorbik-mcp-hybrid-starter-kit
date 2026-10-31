@@ -1,5 +1,7 @@
 # snorbik-mcp-hybrid-starter-kit
 
+![SNORBIK MCP Hybrid Starter Kit](assets/banner.png)
+
 [![Python](https://img.shields.io/badge/Python-3.10+-3776AB.svg?logo=python&logoColor=white)](#)
 [![Protocol](https://img.shields.io/badge/MCP_Protocol-2025--11--25-blue.svg)](#)
 [![Architecture](https://img.shields.io/badge/Architecture-Hybride_Tri--Canal-teal.svg)](#)
