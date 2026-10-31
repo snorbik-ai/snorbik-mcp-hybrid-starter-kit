@@ -1,13 +1,13 @@
 # snorbik-mcp-hybrid-starter-kit
 
-[![Pôle Stratégique](https://img.shields.io/badge/P%C3%B4le-05_POLE_ARCHITECTURE_CODE_CLEAN-blue.svg)](#)
-[![Nature](https://img.shields.io/badge/Nature-VITRINE-orange.svg)](#)
-[![Visibilité](https://img.shields.io/badge/Visibilit%C3%A9-100%-green.svg)](#)
-[![Version](https://img.shields.io/badge/Version-1.0.0-purple.svg)](#)
-[![Standard](https://img.shields.io/badge/Standard-V14.1%20Clean%20Architecture-teal.svg)](#)
+[![Python](https://img.shields.io/badge/Python-3.10+-3776AB.svg?logo=python&logoColor=white)](#)
+[![Protocol](https://img.shields.io/badge/MCP_Protocol-2025--11--25-blue.svg)](#)
+[![Architecture](https://img.shields.io/badge/Architecture-Hybride_Tri--Canal-teal.svg)](#)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](#)
+[![Status](https://img.shields.io/badge/Status-Production--Ready-success.svg)](#)
 
-> **VITRINE OPEN-SOURCE MONDIALE N°1 (Le Cheval de Troie)**  
-> Le gabarit vierge de l'Architecture MCP Hybride Tri-Canal (Porte 1 : JSON-RPC STDIO pour Cursor/Claude/Antigravity, Porte 2 : CLI terminal, Porte 3 : SDK in-process).
+> **Starter Kit Officiel Architecture MCP Hybride Tri-Canal**  
+> Gabarit prêt à l'emploi combinant les 3 canaux d'accès : Canal 1 JSON-RPC STDIO (Cursor, Claude Code, Windsurf, VS Code), Canal 2 CLI terminal, Canal 3 SDK in-process.
 
 ---
 
@@ -16,29 +16,41 @@
 | Champ Stratégique | Valeur Officielle |
 | :--- | :--- |
 | **Composant Officiel** | `snorbik-mcp-hybrid-starter-kit` |
-| **Pôle d'Appartenance** | **Pôle 5 : L'Outillage de Notoriété, Code Clean & Pattern MCP** |
-| **Modèle Business** | **VITRINE OPEN-SOURCE MONDIALE N°1 (Le Cheval de Troie)** |
-| **Politique de Visibilité** | **100% PUBLIC OPEN-SOURCE (MIT)** |
-| **Mission Principale** | Le gabarit vierge de l'Architecture MCP Hybride Tri-Canal (Porte 1 : JSON-RPC STDIO pour Cursor/Claude/Antigravity, Porte 2 : CLI terminal, Porte 3 : SDK in-process). |
-| **Architecture** | Clean Architecture Tri-Canal (STDIO / CLI / SDK In-Process) |
+| **Licence** | **MIT Open-Source** |
+| **Compatibilité Clients** | **Cursor, Claude Code, VS Code, Claude Desktop, Antigravity** |
+| **Architecture** | **Clean Architecture Tri-Canal (STDIO / CLI / SDK In-Process)** |
+| **Spécification MCP** | **JSON-RPC 2.0 (Cycle officiel 2025-11-25)** |
 
 ---
 
-## 2. Guide d'Installation 1-Clic
+## 2. Guide d'Installation Multi-Clients
 
-### Option A : Installation Automatisée 1-Clic (Recommandée)
+### Option A : Installation via Coding Agent (Recommandée)
+Copiez-collez simplement ce prompt dans votre agent IA (Cursor, Claude Code, Windsurf, VS Code Copilot) :
+
+> « Configure le serveur MCP depuis ce dépôt :
+> 1. Détecte mon client actif (Cursor, Claude Code ou VS Code).
+> 2. Lance `python install.py` (ou `python install.py --client cursor|vscode|claude`) pour enregistrer le serveur sans écraser mes autres outils.
+> 3. Vérifie que le serveur répond en appelant l'outil `template_ping` et confirme-moi la réponse `pong`. »
+
+---
+
+### Option B : Installation Automatisée 1-Clic (Terminal)
 Exécutez simplement le script `install.py` à la racine du dépôt :
 
 ```bash
 python install.py
 ```
 
-Ce script effectue automatiquement :
-1. La vérification de votre environnement Python (>= 3.10).
-2. L'installation des dépendances requises en mode éditable (`pip install -e .` ou `npm install`).
-3. La détection et l'injection automatique du serveur dans la configuration de Cursor (`%USERPROFILE%/.cursor/mcp.json`) sans écraser vos autres outils.
+Options ciblées par client :
+- `python install.py --client cursor` : injecte dans `~/.cursor/mcp.json` (clé `mcpServers`).
+- `python install.py --client vscode` : configure `.vscode/mcp.json` (clé officielle `servers`).
+- `python install.py --client claude` : enregistre via `claude mcp add` et configure Claude Desktop.
+- `python install.py --client all` : auto-détection et configuration universelle.
 
-### Option B : Installation Manuelle Développeur
+---
+
+### Option C : Installation Manuelle Développeur
 ```bash
 pip install -e .
 ```
