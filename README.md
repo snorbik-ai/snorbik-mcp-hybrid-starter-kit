@@ -54,7 +54,7 @@ Si vous préférez déclarer manuellement ce serveur dans votre fichier `.cursor
   "mcpServers": {
     "snorbik-mcp-hybrid-starter-kit": {
       "command": "python",
-      "args": ["canal_mcp/mcp_classic_stdio/mcp_server.py"],
+      "args": ["template_mcp_hybride/canal_mcp/mcp_server.py"],
       "env": { "PYTHONIOENCODING": "utf-8" },
       "type": "stdio"
     }
@@ -70,8 +70,8 @@ Ce composant expose des outils déterministes prêts à être invoqués par un m
 
 | Nom de l'Outil (`tool`) | Rôle & Fonction Technique | Déclencheur d'Action (*Quand l'IA DOIT-ELLE l'appeler ?*) | Paramètres Requis | Sortie Retournée |
 | :--- | :--- | :--- | :--- | :--- |
-| `starter_ping` | Vérifie la réactivité du canal STDIO et retourne la latence de traitement. | **Pour tester la bonne liaison entre l'IDE IA et le serveur MCP.** | `aucun` | Message 'pong' avec timestamp UTC et identifiant d'instance. |
-| `starter_echo` | Outil miroir démontrant la validation Pydantic et la conformité du protocole MCP. | **Pour valider les passages de paramètres et la sérialisation JSON.** | `message (str, requis)` | Message validé et enrichi des métadonnées du serveur. |
+| `template_ping` | Vérifie la réactivité du canal STDIO et retourne la latence de traitement. | **Pour tester la bonne liaison entre l'IDE IA et le serveur MCP.** | `aucun` | Message 'pong' avec timestamp UTC et identifiant d'instance. |
+| `template_execute_action` | Outil miroir démontrant la validation Pydantic et la conformité du protocole MCP. | **Pour valider les passages de paramètres et la sérialisation JSON.** | `message (str, requis)` | Message validé et enrichi des métadonnées du serveur. |
 
 ---
 
