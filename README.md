@@ -7,60 +7,85 @@
 [![Status](https://img.shields.io/badge/Status-Production--Ready-success.svg)](#)
 
 > **Starter Kit Officiel Architecture MCP Hybride Tri-Canal**  
-> Gabarit prêt à l'emploi combinant les 3 canaux d'accès : Canal 1 JSON-RPC STDIO (Cursor, Claude Code, Windsurf, VS Code), Canal 2 CLI terminal, Canal 3 SDK in-process.
+> Gabarit de démarrage Python prêt à l'emploi combinant 3 modes d'accès pour vos outils IA :  
+> **1. Canal STDIO** pour les clients MCP (Cursor, VS Code, Claude Code, Windsurf).  
+> **2. Canal CLI** pour vos scripts terminal et pipelines CI/CD.  
+> **3. Canal SDK In-Process** pour vos applications Python en mémoire sans surcoût IPC.
 
 ---
 
-## 1. Carte d'Identité & Rôle Métier
+## 1. Carte d'Identité & Spécifications
 
-| Champ Stratégique | Valeur Officielle |
+| Propriété | Description Officielle |
 | :--- | :--- |
-| **Composant Officiel** | `snorbik-mcp-hybrid-starter-kit` |
-| **Licence** | **MIT Open-Source** |
-| **Compatibilité Clients** | **Cursor, Claude Code, VS Code, Claude Desktop, Antigravity** |
-| **Architecture** | **Clean Architecture Tri-Canal (STDIO / CLI / SDK In-Process)** |
-| **Spécification MCP** | **JSON-RPC 2.0 (Cycle officiel 2025-11-25)** |
+| **Composant** | `snorbik-mcp-hybrid-starter-kit` |
+| **Licence** | **MIT Open-Source** (usage commercial et personnel libre) |
+| **Spécification MCP** | **JSON-RPC 2.0 (Spécification officielle 2025-11-25)** |
+| **Environnement** | Python 3.10+ (Windows, macOS, Linux) |
+| **Clients Supportés** | **Cursor**, **VS Code**, **Claude Desktop**, **Claude Code CLI**, **Windsurf** |
+| **Patron de Conception** | Clean Architecture Tri-Canal (Core / Domain / Application / Adapters) |
 
 ---
 
 ## 2. Guide d'Installation Multi-Clients
 
-### Option A : Installation via Coding Agent (Recommandée)
-Copiez-collez simplement ce prompt dans votre agent IA (Cursor, Claude Code, Windsurf, VS Code Copilot) :
+### Option A : Install with your AI Coding Agent (Recommandée)
 
-> « Configure le serveur MCP depuis ce dépôt :
-> 1. Détecte mon client actif (Cursor, Claude Code ou VS Code).
-> 2. Lance `python install.py` (ou `python install.py --client cursor|vscode|claude`) pour enregistrer le serveur sans écraser mes autres outils.
-> 3. Vérifie que le serveur répond en appelant l'outil `template_ping` et confirme-moi la réponse `pong`. »
+Si vous travaillez avec un agent de code (Cursor Agent, Claude Code, Windsurf Cascade, VS Code Copilot), copiez-collez simplement ce prompt dans votre chat IA :
+
+```text
+Tu es mon ingénieur d'intégration. Configure le serveur MCP depuis ce dépôt :
+1. Identifie le client MCP réellement actif dans notre session (Cursor, VS Code, Claude Code ou Claude Desktop).
+2. Lis les instructions du README et sélectionne l'argument approprié pour l'installation (--client cursor, --client vscode, --client claude ou --client all).
+3. Lance `python install.py --client <client_choisi>` et vérifie le code retour d'exécution.
+4. Si nécessaire, rappelle-moi de recharger la fenêtre de mon client (Developer: Reload Window).
+5. Vérifie que le serveur répond correctement en appelant l'outil `template_ping` et valide la réception de la réponse `pong`.
+6. Rapporte-moi clairement le résultat du test et signale toute erreur éventuelle sans la masquer.
+```
 
 ---
 
-### Option B : Installation Automatisée 1-Clic (Terminal)
-Exécutez simplement le script `install.py` à la racine du dépôt :
+### Option B : Installation Automatisée (Terminal)
+
+Exécutez le script universel `install.py` à la racine du dépôt :
 
 ```bash
+# Installation automatique tous clients détectés :
 python install.py
+
+# Ou installation ciblée selon votre environnement :
+python install.py --client cursor   # Configure ~/.cursor/mcp.json (clé "mcpServers")
+python install.py --client vscode   # Configure .vscode/mcp.json (clé officielle "servers")
+python install.py --client claude   # Configure Claude Desktop et enregistre via claude mcp add
+python install.py --client all      # Auto-détection et configuration universelle
 ```
 
-Options ciblées par client :
-- `python install.py --client cursor` : injecte dans `~/.cursor/mcp.json` (clé `mcpServers`).
-- `python install.py --client vscode` : configure `.vscode/mcp.json` (clé officielle `servers`).
-- `python install.py --client claude` : enregistre via `claude mcp add` et configure Claude Desktop.
-- `python install.py --client all` : auto-détection et configuration universelle.
+#### Sécurité et Résilience de l'Installateur :
+- **Vérification stricte de `pip install`** : toute anomalie de dépendances bloque l'installation avec code d'erreur explicite.
+- **Protection anti-corruption JSON** : si un fichier de configuration existant est syntaxiquement invalide, l'installateur génère une copie de sauvegarde `.corrupted.bak` et **refuse formellement d'écraser le fichier**.
+- **Préservation intégrale** : tous vos serveurs MCP et configurations existantes sont conservés sans perte.
 
 ---
 
 ### Option C : Installation Manuelle Développeur
+
 ```bash
+# 1. Cloner et installer en mode éditable
+git clone https://github.com/snorbik-ai/snorbik-mcp-hybrid-starter-kit.git
+cd snorbik-mcp-hybrid-starter-kit
 pip install -e .
+
+# 2. Exécuter la suite de tests unitaires
+pytest
 ```
 
 ---
 
-## 3. Configuration Manuelle (Cursor, Antigravity, Claude Desktop)
+## 3. Configuration Manuelle des Clients
 
-Si vous préférez déclarer manuellement ce serveur dans votre fichier `.cursor/mcp.json` ou `mcp_config.json`, ajoutez le bloc suivant :
+Si vous préférez déclarer manuellement ce serveur, voici les blocs de configuration prêts à copier :
 
+#### Pour Cursor (`~/.cursor/mcp.json`) & Claude Desktop (`claude_desktop_config.json`) :
 ```json
 {
   "mcpServers": {
@@ -74,40 +99,73 @@ Si vous préférez déclarer manuellement ce serveur dans votre fichier `.cursor
 }
 ```
 
+#### Pour VS Code (`.vscode/mcp.json` - Spécification Officielle VS Code) :
+```json
+{
+  "servers": {
+    "snorbik-mcp-hybrid-starter-kit": {
+      "command": "python",
+      "args": ["template_mcp_hybride/canal_mcp/mcp_server.py"],
+      "env": { "PYTHONIOENCODING": "utf-8" }
+    }
+  }
+}
+```
+
 ---
 
-## 4. Catalogue Sémantique des Outils (`tools`)
+## 4. Outils Déclarés (`tools`) & Test de Fonctionnement
 
-Ce composant expose des outils déterministes prêts à être invoqués par un modèle de langage (LLM) :
+Ce serveur expose deux outils déterministes validés selon le schéma Pydantic :
 
-| Nom de l'Outil (`tool`) | Rôle & Fonction Technique | Déclencheur d'Action (*Quand l'IA DOIT-ELLE l'appeler ?*) | Paramètres Requis | Sortie Retournée |
-| :--- | :--- | :--- | :--- | :--- |
-| `template_ping` | Vérifie la réactivité du canal STDIO et retourne l'état de santé du serveur. | **Pour tester la bonne liaison entre l'IDE IA et le serveur MCP.** | `aucun` | DTO `ToolResponseDto` (`operation_id`, `status: "SUCCESS"`, `payload.reply: "pong"`, `execution_duration_ms`). |
-| `template_execute_action` | Outil miroir démontrant la validation Pydantic et la conformité du protocole MCP. | **Pour valider les passages de paramètres et la sérialisation JSON.** | `message (str, requis)` | DTO enrichi avec message validé, statut opérationnel et horodatage Unix certifié. |
+| Outil (`tool`) | Rôle & Usage | Paramètres | Réponse Attendue |
+| :--- | :--- | :--- | :--- |
+| `template_ping` | **Test de réactivité et santé du serveur.** À appeler immédiatement après l'installation pour vérifier la liaison. | `aucun` | DTO `ToolResponseDto` avec `status: "SUCCESS"` et `payload.reply: "pong"`. |
+| `template_execute_action` | **Démonstration de validation et sérialisation.** Permet de transmettre une charge utile typée. | `message (str, requis)` | DTO enrichi avec horodatage Unix certifié et écho validé. |
+
+#### Vérification du cycle de vie MCP :
+1. Handshake `initialize` (négociation du protocole `2024-11-05` / `2025-11-25`).
+2. Réception silencieuse des notifications JSON-RPC (`notifications/initialized`).
+3. Invocation d'outil `tools/call` (`template_ping` → réponse `pong`).
 
 ---
 
 ## 5. Performances Mesurées en Conditions Réelles
 
 Mesuré sur banc d'essai indépendant (environnement Windows / Python 3.12) :
-- **Installation 1-clic (`python install.py`)** : ~**13,6 secondes**
-- **Tests unitaires (`pytest`)** : **3 passed** en **1,53 s**
-- **Latence à froid (1er appel Python)** : **391 ms**
-- **Latence à chaud (requêtes suivantes)** : **0,099 ms** (< 0,1 milliseconde)
+- **Installation des dépendances (`python install.py`)** : ~**2 à 3 secondes** (selon cache pip).
+- **Suite de tests unitaires (`pytest`)** : **3 tests passés à 100%** en **1,53 s**.
+- **Latence à froid (1er appel)** : **~390 à 400 ms** (initialisation du runtime Python, chargement des modules Pydantic et handshake `initialize`).
+- **Latence à chaud Canal STDIO (IPC)** : **0,19 ms** (< 0,2 milliseconde par appel JSON-RPC sur canal ouvert).
+- **Latence à chaud Canal SDK (In-Process)** : **0,008 ms** (8 microsecondes en mémoire vive pure sans IPC).
 
 ---
 
-## 6. Exemples Concrets de Prompts Utilisateur
+## 6. Utilisation Multi-Canal
 
-Voici 3 exemples réels de requêtes que vous pouvez poser directement dans le chat de Cursor ou Claude Code pour faire travailler cet outil :
+### Canal 1 : Via votre IDE IA (STDIO)
+Demandez à votre assistant :
+- *« Envoie un template_ping au serveur starter kit pour vérifier son statut. »*
+- *« Exécute template_execute_action avec le message "Hello MCP". »*
 
-1. *« Teste la connexion avec le serveur MCP Starter Kit en envoyant un ping. »*
-2. *« Montre-moi comment ajouter un nouvel outil Pydantic dans ce gabarit hybride. »*
-3. *« Explique la structure des 3 canaux (STDIO, CLI, SDK) de ce patron de conception. »*
+### Canal 2 : En Ligne de Commande (CLI)
+```bash
+python -m template_mcp_hybride.canal_sdk_cli.cli ping
+python -m template_mcp_hybride.canal_sdk_cli.cli execute --message "Test CLI"
+```
+
+### Canal 3 : En Bibliothèque Python (SDK In-Process)
+```python
+from template_mcp_hybride.canal_sdk_cli.sdk import HybridMcpStarterSDK
+
+sdk = HybridMcpStarterSDK()
+reponse = sdk.ping()
+print(reponse)  # {'reply': 'pong', 'timestamp': ...}
+```
 
 ---
 
-## 🛡️ Propriété Intellectuelle & Sécurité
+## 🛡️ Licence & Contribution
 - **Éditeur :** SNORBIK AI © 2026.
-- **Classification :** Conforme à la Directive Maîtresse V14.1 (Recettes d'architecture sanctuarisées dans le Pôle 06).
-- **Zéro Régression :** Respect strict des budgets de lignes et des normes de sécurité.
+- **Licence :** Open-Source sous licence MIT (libre pour projets commerciaux et open-source).
+- **Spécification :** Conforme aux standards officiels MCP (Model Context Protocol).
