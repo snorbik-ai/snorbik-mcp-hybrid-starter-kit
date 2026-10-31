@@ -19,3 +19,6 @@ dependencies = [
 
 [tool.setuptools]
 packages = { find = { where = ["."], exclude = ["tests*", "docs*"] } }
+
+[tool.pytest.ini_options]
+testpaths = ["template_mcp_hybride/tests"]
