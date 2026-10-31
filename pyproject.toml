@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "snorbik-mcp-hybrid-starter-kit"
+version = "1.0.0"
+description = "Le gabarit vierge de l'Architecture MCP Hybride Tri-Canal (Porte 1 : JSON-RPC STDIO pour Cursor/Claude/Antigravity, Porte 2 : CLI terminal, Porte 3 : SDK in-process)."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "Proprietary / SNORBIK AI" }
+authors = [
+    { name = "Snorbik AI Engineering", email = "engineering@snorbik.ai" }
+]
+dependencies = [
+    "pydantic>=2.7.0",
+    "mcp>=1.0.0"
+]
+
+[tool.setuptools]
+packages = { find = { where = ["."], exclude = ["tests*", "docs*"] } }

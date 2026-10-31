@@ -1,53 +1,61 @@
 # snorbik-mcp-hybrid-starter-kit
 
 [![Pôle Stratégique](https://img.shields.io/badge/P%C3%B4le-05_POLE_ARCHITECTURE_CODE_CLEAN-blue.svg)](#)
-[![Nature Commerciale](https://img.shields.io/badge/Nature-VITRINE-orange.svg)](#)
+[![Nature](https://img.shields.io/badge/Nature-VITRINE-orange.svg)](#)
 [![Visibilité](https://img.shields.io/badge/Visibilit%C3%A9-100%-green.svg)](#)
-[![Clean Architecture](https://img.shields.io/badge/Architecture-Clean%20Architecture%20Ports%20%26%20Adapters-teal.svg)](#)
-[![Budget Lignes](https://img.shields.io/badge/R%C3%A8gle%20%235-%3C%20350%20Lignes%20Garanti-blueviolet.svg)](#)
+[![Version](https://img.shields.io/badge/Version-1.0.0-purple.svg)](#)
+[![Standard](https://img.shields.io/badge/Standard-V14.1%20Clean%20Architecture-teal.svg)](#)
 
 > **VITRINE OPEN-SOURCE MONDIALE N°1 (Le Cheval de Troie)**  
-> Positionne SNORBIK AI comme l'inventeur du Pattern MCP Hybride Tri-Canal auprès des développeurs mondiaux. Zéro secret d'affaires, pur design pattern.
+> Le gabarit vierge de l'Architecture MCP Hybride Tri-Canal (Porte 1 : JSON-RPC STDIO pour Cursor/Claude/Antigravity, Porte 2 : CLI terminal, Porte 3 : SDK in-process).
 
 ---
 
-## 1. Fiche d'Identité & Modèle Commercial
+## 1. Carte d'Identité & Rôle Métier
 
-| Champ | Valeur Stratégique |
+| Champ Stratégique | Valeur Officielle |
 | :--- | :--- |
-| **Composant** | `snorbik-mcp-hybrid-starter-kit` |
-| **Pôle d'Appartenance** | **Pôle 5 : Outillage de Notoriété, Code Clean & Pattern MCP** |
+| **Composant Officiel** | `snorbik-mcp-hybrid-starter-kit` |
+| **Pôle d'Appartenance** | **Pôle 5 : L'Outillage de Notoriété, Code Clean & Pattern MCP** |
 | **Modèle Business** | **VITRINE OPEN-SOURCE MONDIALE N°1 (Le Cheval de Troie)** |
-| **Stratégie de Visibilité** | **100% PUBLIC OPEN-SOURCE (MIT)** |
-| **Potentiel Marché** | Positionne SNORBIK AI comme l'inventeur du Pattern MCP Hybride Tri-Canal auprès des développeurs mondiaux. Zéro secret d'affaires, pur design pattern. |
+| **Politique de Visibilité** | **100% PUBLIC OPEN-SOURCE (MIT)** |
+| **Mission Principale** | Le gabarit vierge de l'Architecture MCP Hybride Tri-Canal (Porte 1 : JSON-RPC STDIO pour Cursor/Claude/Antigravity, Porte 2 : CLI terminal, Porte 3 : SDK in-process). |
+| **Architecture** | Clean Architecture Tri-Canal (STDIO / CLI / SDK In-Process) |
 
 ---
 
-## 2. Guide d'Installation 1-Clic (Développeur Humain)
+## 2. Guide d'Installation 1-Clic
+
+### Option A : Installation Automatisée 1-Clic (Recommandée)
+Exécutez simplement le script `install.py` à la racine du dépôt :
 
 ```bash
-git clone https://github.com/snorbik-ai/snorbik-mcp-hybrid-starter-kit.git
-cd snorbik-mcp-hybrid-starter-kit
 python install.py
 ```
 
-Le script installe automatiquement les dépendances requises et résout les chemins de manière dynamique (**zéro chemin Windows absolu en dur**).
+Ce script effectue automatiquement :
+1. La vérification de votre environnement Python (>= 3.10).
+2. L'installation des dépendances requises en mode éditable (`pip install -e .` ou `npm install`).
+3. La détection et l'injection automatique du serveur dans la configuration de Cursor (`%USERPROFILE%/.cursor/mcp.json`) sans écraser vos autres outils.
+
+### Option B : Installation Manuelle Développeur
+```bash
+pip install -e .
+```
 
 ---
 
-## 3. Configuration 1-Clic pour Agents IA (Cursor, Antigravity, Claude Code)
+## 3. Configuration Manuelle (Cursor, Antigravity, Claude Desktop)
 
-Ajoutez ce bloc à votre fichier `.mcp.json` ou `mcp_config.json` :
+Si vous préférez déclarer manuellement ce serveur dans votre fichier `.cursor/mcp.json` ou `mcp_config.json`, ajoutez le bloc suivant :
 
 ```json
 {
   "mcpServers": {
     "snorbik-mcp-hybrid-starter-kit": {
       "command": "python",
-      "args": ["template_mcp_hybride/canal_mcp/mcp_server.py"],
-      "env": {
-        "PYTHONIOENCODING": "utf-8"
-      },
+      "args": ["canal_mcp/mcp_classic_stdio/mcp_server.py"],
+      "env": { "PYTHONIOENCODING": "utf-8" },
       "type": "stdio"
     }
   }
@@ -58,22 +66,26 @@ Ajoutez ce bloc à votre fichier `.mcp.json` ou `mcp_config.json` :
 
 ## 4. Catalogue Sémantique des Outils (`tools`)
 
-| Outil (`name`) | Rôle & Fonction | Déclencheur d'Action (Quand l'appeler ?) | Arguments requis | Sortie Observable |
+Ce composant expose des outils déterministes prêts à être invoqués par un modèle de langage (LLM) :
+
+| Nom de l'Outil (`tool`) | Rôle & Fonction Technique | Déclencheur d'Action (*Quand l'IA DOIT-ELLE l'appeler ?*) | Paramètres Requis | Sortie Retournée |
 | :--- | :--- | :--- | :--- | :--- |
-| `run_agent_lifecycle` | Gabarit d'exécution déterministe avec digest-first et archivage context_llm. | **Modèle de conception pour tout nouveau serveur MCP.** | `use_case, arguments` | Digest synthétique |
+| `starter_ping` | Vérifie la réactivité du canal STDIO et retourne la latence de traitement. | **Pour tester la bonne liaison entre l'IDE IA et le serveur MCP.** | `aucun` | Message 'pong' avec timestamp UTC et identifiant d'instance. |
+| `starter_echo` | Outil miroir démontrant la validation Pydantic et la conformité du protocole MCP. | **Pour valider les passages de paramètres et la sérialisation JSON.** | `message (str, requis)` | Message validé et enrichi des métadonnées du serveur. |
 
 ---
 
 ## 5. Exemples Concrets de Prompts Utilisateur
 
-Vous pouvez déclencher immédiatement ce composant en formulant ces requêtes dans votre IDE :
+Voici 3 exemples réels de requêtes que vous pouvez poser directement dans le chat de Cursor ou Claude Code pour faire travailler cet outil :
 
-1. *« Comment créer un serveur MCP Tri-Canal avec ce starter kit ? »*
-2. *« Montre-moi l'implémentation de référence du pattern digest-first. »*
-3. *« Comment configurer la mémoire glissante d'un agent de coding ? »*
+1. *« Teste la connexion avec le serveur MCP Starter Kit en envoyant un ping. »*
+2. *« Montre-moi comment ajouter un nouvel outil Pydantic dans ce gabarit hybride. »*
+3. *« Explique la structure des 3 canaux (STDIO, CLI, SDK) de ce patron de conception. »*
 
 ---
 
-## 📜 Propriété & Licence
-Composant officiel de l'écosystème **SNORBIK AI © 2026**.  
-Tous droits réservés.
+## 🛡️ Propriété Intellectuelle & Sécurité
+- **Éditeur :** SNORBIK AI © 2026.
+- **Classification :** Conforme à la Directive Maîtresse V14.1 (Recettes d'architecture sanctuarisées dans le Pôle 06).
+- **Zéro Régression :** Respect strict des budgets de lignes et des normes de sécurité.
