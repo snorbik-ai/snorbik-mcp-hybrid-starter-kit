@@ -73,7 +73,7 @@ def handle_tool_call(tool_name: str, arguments: Dict[str, Any]) -> Dict[str, Any
 
 
 def run_stdio_server():
-    """Boucle principale JSON-RPC 2.0 sur stdin / stdout."""
+    """Boucle principale JSON-RPC 2.0 sur stdin / stdout conforme au protocole MCP."""
     for line in sys.stdin:
         line = line.strip()
         if not line:
@@ -81,7 +81,11 @@ def run_stdio_server():
         try:
             req = json.loads(line)
             req_id = req.get("id")
-            method = req.get("method")
+            method = req.get("method", "")
+
+            # Notification JSON-RPC (sans id ou méthode notifications/*) : AUCUNE réponse autorisée
+            if req_id is None or method.startswith("notifications/"):
+                continue
 
             if method == "initialize":
                 resp = {
@@ -90,9 +94,11 @@ def run_stdio_server():
                     "result": {
                         "protocolVersion": "2024-11-05",
                         "capabilities": {"tools": {}},
-                        "serverInfo": {"name": "template-mcp-hybride", "version": "1.0.0"}
+                        "serverInfo": {"name": "snorbik-mcp-hybrid-starter-kit", "version": "1.0.0"}
                     }
                 }
+            elif method == "ping":
+                resp = {"jsonrpc": "2.0", "id": req_id, "result": {}}
             elif method == "tools/list":
                 resp = {"jsonrpc": "2.0", "id": req_id, "result": {"tools": TOOLS_METADATA}}
             elif method == "tools/call":
@@ -113,9 +119,10 @@ def run_stdio_server():
             sys.stdout.write(json.dumps(resp, ensure_ascii=False) + "\n")
             sys.stdout.flush()
         except Exception as e:
-            err_resp = {"jsonrpc": "2.0", "id": None, "error": {"code": -32603, "message": str(e)}}
-            sys.stdout.write(json.dumps(err_resp, ensure_ascii=False) + "\n")
-            sys.stdout.flush()
+            if req.get("id") is not None:
+                err_resp = {"jsonrpc": "2.0", "id": req.get("id"), "error": {"code": -32603, "message": str(e)}}
+                sys.stdout.write(json.dumps(err_resp, ensure_ascii=False) + "\n")
+                sys.stdout.flush()
 
 
 if __name__ == "__main__":
