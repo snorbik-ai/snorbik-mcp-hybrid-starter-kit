@@ -30,6 +30,28 @@
 
 ---
 
+## 🎯 À Quoi Sert ce Squelette ? La Recette 5 Minutes avec votre IA
+
+Par défaut, une IA de code (Cursor, Claude Code, Copilot) est enfermée dans votre éditeur : elle ne peut pas interroger vos bases de données, lire vos fichiers métier ni exécuter vos scripts d'entreprise.
+
+**Ce Starter Kit est le « châssis » prêt à l'emploi qui donne des super-pouvoirs réels à votre IA.**  
+Au lieu d'écrire 500 lignes de plomberie protocolaire JSON-RPC, donnez simplement ce squelette à votre agent IA et demandez-lui d'y brancher votre logique métier :
+
+### 3 Exemples Concrets d'Outils que vous pouvez fabriquer en 5 minutes :
+
+| Ce que vous voulez créer | Le prompt exact à donner à votre Agent IA dans ce dépôt |
+| :--- | :--- |
+| **🔍 Connecter votre base de données** | *« Utilise l'architecture propre de ce starter kit. Remplace `template_ping` par un outil `query_database` qui exécute une requête `SELECT` sur ma base SQLite/Postgres locale et retourne le résultat typé en JSON. Crée le use-case et le schéma Pydantic. »* |
+| **📄 Analyser des documents ou rapports** | *« Ajoute un outil `extract_doc_summary` dans ce squelette qui lit les fichiers d'un dossier cible, extrait les métadonnées et retourne une synthèse structurée. »* |
+| **⚡ Automatiser vos actions DevOps** | *« Ajoute un outil `check_docker_health` qui interroge l'API Docker locale et remonte les conteneurs arrêtés ou en erreur. »* |
+
+### Comment ça marche ? (La Recette en 3 Étapes)
+1. **Clonez ce dépôt** sur votre machine.
+2. **Donnez la consigne à votre agent IA** (exemples ci-dessus) : il génère le cas d'usage dans `core/application/` et le déclare dans `canal_mcp/mcp_server.py`.
+3. **Lancez l'installateur** : `python install.py --client cursor` ➔ Votre outil sur-mesure est instantanément opérationnel dans votre IDE !
+
+---
+
 ## 2. Guide d'Installation Multi-Clients
 
 ### Option A : Install with your AI Coding Agent (Recommandée)
