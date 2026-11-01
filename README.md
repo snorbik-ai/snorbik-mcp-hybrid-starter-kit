@@ -41,7 +41,7 @@ Au lieu d'écrire 500 lignes de plomberie protocolaire JSON-RPC, donnez simpleme
 
 | Ce que vous voulez créer | Le prompt exact à donner à votre Agent IA dans ce dépôt |
 | :--- | :--- |
-| **🔍 Connecter votre base de données** | *« Utilise l'architecture propre de ce starter kit. Remplace `template_ping` par un outil `query_database` qui exécute une requête `SELECT` sur ma base SQLite/Postgres locale et retourne le résultat typé en JSON. Crée le use-case et le schéma Pydantic. »* |
+| **🔍 Connecter votre base de données** | *« En t'appuyant sur l'exemple de `template_ping` de ce Starter Kit, crée un outil MCP `search_customer` qui interroge ma base SQLite clients et retourne les résultats en JSON. Crée le use-case et le schéma Pydantic. »* |
 | **📄 Analyser des documents ou rapports** | *« Ajoute un outil `extract_doc_summary` dans ce squelette qui lit les fichiers d'un dossier cible, extrait les métadonnées et retourne une synthèse structurée. »* |
 | **⚡ Automatiser vos actions DevOps** | *« Ajoute un outil `check_docker_health` qui interroge l'API Docker locale et remonte les conteneurs arrêtés ou en erreur. »* |
 
